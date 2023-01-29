@@ -25,9 +25,9 @@ export default function Banner() {
             {
                 data.map((image, i) => {
                     return (
-                        <>
-                            <img src={image} alt=" " className='banner_img' />
-                        </>
+                        
+                            <img src={image} alt=" " key={i} className='banner_img' />
+                        
                     )
                 })
             }
