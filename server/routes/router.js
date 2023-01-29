@@ -6,9 +6,21 @@ router.get("/getproducts",async(req,res)=>{
     try {
         const productsdata= await Products.find();
         // console.log("new data"+productsdata)
-        res.status(200).json(productsdata)
+        res.status(201).json(productsdata)
     } catch (error) {
         console.log("error"+ error.message)
+    }
+})
+
+router.get("/getproductsone/:id",async(req,res)=>{
+    try {
+        const {id}=req.params
+
+        const individualData= await Products.find({id:id})
+        res.status(201).json(individualData)
+        console.log(id)
+    } catch (error) {
+        console.log("error",error.message)
     }
 })
 

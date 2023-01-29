@@ -1,7 +1,6 @@
 import React from 'react'
 
-export default function 
-() {
+export default function Option() {
   return (
     <div className='add_remove_select'>
     <select>

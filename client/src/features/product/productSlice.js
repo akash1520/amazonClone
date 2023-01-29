@@ -10,7 +10,7 @@ const initialState = {
 // Generates pending, fulfilled and rejected action types
 export const fetchProducts = createAsyncThunk('product/fetchProducts', () => {
   return axios
-    .get('http://localhost:8005/getproducts')
+    .get('/getproducts')
     .then(response => response.data)
 })
 

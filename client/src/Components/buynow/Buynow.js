@@ -22,7 +22,7 @@ export default function Buynow() {
                     <h3 className='differentprice'>$4000</h3>
                     <p className='unusuall'>Usually dispatched in 5 days</p>
                     <p>Eligble for free Shipping</p>
-                    <img src="https://m.media-amazon.com/images/G/31/marketing/fba/fba-badge_18px-2x._CB485942108_.png"/>
+                    <img src="https://m.media-amazon.com/images/G/31/marketing/fba/fba-badge_18px-2x._CB485942108_.png" alt=''/>
                     <Option/>
                 </div>
                 <h3 className="item_price">$4985</h3>
