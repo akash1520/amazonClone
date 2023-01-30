@@ -25,7 +25,7 @@ export default function Cart() {
       return <p>Error: {error.message}</p>;
     }
 
-    if(!prod) return(<h3 style={{paddingTop:"50px"}}>not product info available</h3>)
+    if(!prod || !Object.keys(prod).length) return(<h3 style={{paddingTop:"50px"}}>not product info available</h3>)
     
     return (
         <div className='cart_section'>
@@ -46,7 +46,7 @@ export default function Cart() {
                     <p>You Save: <span style={{ color: '#B12704' }}>{prod.price.mrp-prod.price.cost} ({prod.price.discount})</span></p>
                     
                     <div className="discount_box">
-                        <h5>Discount: <span style={{ color: '#111' }}>Extra {prod.price.discount} Off</span></h5>
+                        <h5>Discount: <span style={{ color: '#111' }}>{prod.discount}</span></h5>
                         <h4>Free Delivery: <span style={{ color: '#111',fontWeight:600 }}>Oct 10-20</span> Details</h4>
                         <p>Fastest Delivery: <span style={{color:"#111",fontWeight:600}}>Tommorow 4 P.M.</span></p>
                     </div>
