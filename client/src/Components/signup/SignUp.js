@@ -3,13 +3,14 @@ import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 export default function SignUp() {
-    const [userData, setUserData] = useState({
+    const initialState = {
         fname: "",
         email: "",
         mobile: "",
         password: "",
         cpassword: ""
-    })
+    }
+    const [userData, setUserData] = useState(initialState)
     // console.log(userData)
     function addData(e) {
         const { name, value } = e.target;
@@ -27,6 +28,7 @@ export default function SignUp() {
                 .post("/register", userData)
                 .then((response)=>{
                         alert("Signed up successfully")
+                        setUserData(initialState)
                 })
                 .catch(error=>{
                     alert(`${error.response.statusText} : Try again with proper details `);
