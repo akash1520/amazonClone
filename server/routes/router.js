@@ -2,6 +2,7 @@ const express = require("express");
 const router = new express.Router()
 const Products = require("../models/productsSchema");
 const USER = require("../models/userSchema");
+const bcrypt = require("bcryptjs")
 
 router.get("/getproducts", async (req, res) => {
     try {
@@ -63,6 +64,33 @@ router.post("/register", async (req, res) => {
     } catch (error) {
         
     }
+})
+
+router.post("/login", async(req,res)=>{
+    const {email,password} = req.body
+    if(!email||!password){
+        res.status(400).json({error:"Wrong details, fill it properly"})
+    }
+
+    try {
+        const  userLogin = await USER.findOne({email:email})
+        if(userLogin){
+            const isMatch = await bcrypt.compare(password, userLogin.password)
+            // console.log(isMatch)
+
+            //token generate
+            
+            if(!isMatch){
+                res.status(400).json({error:"Wrong password, please enter the correct password"})
+            }else{
+                res.status(200).json({message:"Password match"})
+            }
+
+        }
+    } catch (error) {
+        res.status(400).json({error:"Invalid details"})
+    }
+
 })
 
 module.exports = router;

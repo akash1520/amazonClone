@@ -1,6 +1,9 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export default function SignUp() {
     const initialState = {
@@ -27,11 +30,16 @@ export default function SignUp() {
             axios
                 .post("/register", userData)
                 .then((response)=>{
-                        alert("Signed up successfully")
+                        toast.success("Signed up successfully",{
+                            position:"top-center"
+                        })
+                        // alert("Signed up successfully")
                         setUserData(initialState)
                 })
                 .catch(error=>{
-                    alert(`${error.response.statusText} : Try again with proper details `);
+                    toast.error(`${error.response.statusText} : Try again with proper details `,{
+                        position:"top-center"
+                    });
                 })
 
     }
@@ -45,6 +53,7 @@ export default function SignUp() {
                     <div className="sign_header">
                         <img src='/blacklogoamazon.png' alt='amazonlogo' />
                     </div>
+                    <ToastContainer/>
                     <div className="sign_form">
                         <form method='POST'>
                             <h1>Sign Up</h1>

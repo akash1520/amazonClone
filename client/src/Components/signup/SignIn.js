@@ -1,13 +1,16 @@
+import axios from 'axios'
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import { toast, ToastContainer } from 'react-toastify'
 import './signup.css'
-
 export default function SignIn() {
 
-    const [logData,setLogData]=useState({
+    const initialState={
         email:"",
         password:""
-    })
+    }
+
+    const [logData,setLogData]=useState(initialState)
     // console.log(logData)
     function addData(e){
         const {name,value}=e.target;
@@ -19,6 +22,26 @@ export default function SignIn() {
         })
     }
 
+    const sendData = async (e) => {
+        e.preventDefault();
+        const res = await
+            axios
+                .post("/login", logData)
+                .then((response)=>{
+                        toast.success("Signed in successfully",{
+                            position:"top-center"
+                        })
+                        // alert("Signed up successfully")
+                        setLogData(initialState)
+                })
+                .catch(error=>{
+                    toast.error(`${error.response.statusText} : Try again with proper details `,{
+                        position:"top-center"
+                    });
+                })
+
+    }
+
   return (
     <>
         <section>
@@ -26,8 +49,9 @@ export default function SignIn() {
                 <div className="sign_header">
                     <img src='/blacklogoamazon.png' alt='amazonlogo'/>
                 </div>
+                <ToastContainer/>
                 <div className="sign_form">
-                    <form>
+                    <form method='POST'>
                         <h1>Sign In</h1>
                         <div className="form_data">
                             <label htmlFor='email'>
@@ -41,7 +65,7 @@ export default function SignIn() {
                             </label>
                             <input type="password" onChange={addData} value={logData.password} placeholder='At least 6 character' name='password' id='password'/>
                         </div>
-                        <button className='signin_btn'>Continue</button>
+                        <button className='signin_btn' onClick={sendData}>Continue</button>
                     </form>
                 </div>
                 <div className="create_accountinfo">

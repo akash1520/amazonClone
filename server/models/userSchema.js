@@ -54,6 +54,8 @@ userSchema.pre("save", async function(next){
     next()
 })
 
+//token generate
+
 
 const USER = mongoose.model("USER", userSchema)
 module.exports = USER;
