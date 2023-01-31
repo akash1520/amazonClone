@@ -79,6 +79,8 @@ router.post("/login", async(req,res)=>{
             // console.log(isMatch)
 
             //token generate
+            const token = await userLogin.generateAuthtoken()
+            console.log(token);
             
             if(!isMatch){
                 res.status(400).json({error:"Wrong password, please enter the correct password"})
@@ -86,6 +88,8 @@ router.post("/login", async(req,res)=>{
                 res.status(200).json({message:"Password match"})
             }
 
+        }else{
+            res.status(400).json({error:"Invalid Details"})
         }
     } catch (error) {
         res.status(400).json({error:"Invalid details"})
