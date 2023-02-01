@@ -3,6 +3,8 @@ const router = new express.Router()
 const Products = require("../models/productsSchema");
 const USER = require("../models/userSchema");
 const bcrypt = require("bcryptjs");
+const authenticate = require("../middleware/authenticate");
+
 
 router.get("/getproducts", async (req, res) => {
     try {
@@ -83,9 +85,9 @@ router.post("/login", async(req,res)=>{
             // console.log(token);
 
             //cookie generation
-            res.cookie("AmazonWeb", token, {
-                expires:new Date(Date.now()+900000),
-                httpOnly:true
+            res.cookie("amazonWeb", token, {
+                httpOnly:true,
+                expires:new Date(Date.now()+3600000)
             })
             
             if(!isMatch){
@@ -103,13 +105,29 @@ router.post("/login", async(req,res)=>{
 
 })
 
-router.post("/addcart/:id",async(req,res)=>{
+router.post("/addcart/:id", authenticate, async (req, res) => {
+
     try {
-        const {id}=req.params;
-        const cart = Products.findOne({id:id})
+        console.log("Working");
+        const { id } = req.params;
+        const cart = await Products.findOne({ id: id });
+        console.log(cart + "Found the cart");
+
+        const Usercontact = await USER.findOne({ _id: req.userID });
+        console.log(Usercontact + "Found the user with given cookie");
+
+
+        if (Usercontact) {
+            const cartData = await Usercontact.addcartdata(cart);
+
+            await Usercontact.save();
+            console.log(cartData + " Cart data has been saved");
+            console.log(Usercontact + "User Will be saved with new cart data");
+            res.status(201).json(Usercontact);
+        }
     } catch (error) {
-        
+        console.log(error);
     }
-})
+});
 
 module.exports = router;

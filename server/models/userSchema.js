@@ -2,7 +2,8 @@ const mongoose = require("mongoose")
 const validator = require("validator")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-const secretKey= process.env.SECERT_KEY
+const secretKey= process.env.KEY
+
 
 const userSchema = new mongoose.Schema({
     fname: {
@@ -60,7 +61,7 @@ userSchema.pre("save", async function(next){
 
 userSchema.methods.generateAuthtoken = async function(){
     try {
-        let token = jwt.sign({_id:this._id},secretKey)
+        let token = jwt.sign({_id:this._id},secretKey,{ expiresIn: '1h' })
         this.tokens=this.tokens.concat({token:token})
         await this.save();
         return token
@@ -69,7 +70,15 @@ userSchema.methods.generateAuthtoken = async function(){
     }
 }
 
-userSchema.methods
+userSchema.methods.addcartdata = async function(cart){
+    try {
+        this.carts = this.carts.concat(cart)
+        await this.save()
+        return this.carts
+    } catch (error) {
+        console.log(error)
+    }
+} 
 
 const USER = mongoose.model("USER", userSchema)
 module.exports = USER;

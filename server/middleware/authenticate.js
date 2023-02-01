@@ -1,29 +1,29 @@
 const jwt = require("jsonwebtoken");
-const USER = require("../models/userSchema");
-const secretKey = process.env.SECERT_KEY
+const User = require("../models/userSchema");
+const keysecret = process.env.KEY
 
-const authenticate = async (req,res,next)=>{
-    try{
-        const token = req.cookies.AmazonWeb;
+const authenticate = async(req,res,next)=>{
+    try {
+        const token = req.cookies.amazonWeb;
+        
+        const verifyToken = jwt.verify(token,keysecret);
+     
+        const rootUser = await User.findOne({_id:verifyToken._id,"tokens.token":token});
+       
 
-        const verifyToken = jwt.verify(token, secretKey)
-        console.log(verifyToken)
+        if(!rootUser){ throw new Error("User Not Found") };
 
-        const rootUser = await USER.findOne({_id:verifyToken._id,"tokens.token":token})
-        console.log(rootUser)
+        req.token = token; 
+        req.rootUser = rootUser;   
+        req.userID = rootUser._id;   
+    
+        next();  
 
-        if(!rootUser) throw new Error("User not found!")
 
-        req.token = token
-        req.rootUser=rootUser
-        req.userID = rootUser._id
-
-        next()
-
-    }catch(error){
-        res.status(401).send("Unauthorized User: No token provided!")
-        console.log(error)
+    } catch (error) {
+        res.status(401).send("Unauthorized:No token provided");
+        console.log(error);
     }
-}
+};
 
-module.exports = authenticate
+module.exports = authenticate;
