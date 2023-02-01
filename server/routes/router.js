@@ -2,7 +2,7 @@ const express = require("express");
 const router = new express.Router()
 const Products = require("../models/productsSchema");
 const USER = require("../models/userSchema");
-const bcrypt = require("bcryptjs")
+const bcrypt = require("bcryptjs");
 
 router.get("/getproducts", async (req, res) => {
     try {
@@ -78,9 +78,15 @@ router.post("/login", async(req,res)=>{
             const isMatch = await bcrypt.compare(password, userLogin.password)
             // console.log(isMatch)
 
-            //token generate
+            //token generation
             const token = await userLogin.generateAuthtoken()
-            console.log(token);
+            // console.log(token);
+
+            //cookie generation
+            res.cookie("AmazonWeb", token, {
+                expires:new Date(Date.now()+900000),
+                httpOnly:true
+            })
             
             if(!isMatch){
                 res.status(400).json({error:"Wrong password, please enter the correct password"})
@@ -95,6 +101,15 @@ router.post("/login", async(req,res)=>{
         res.status(400).json({error:"Invalid details"})
     }
 
+})
+
+router.post("/addcart/:id",async(req,res)=>{
+    try {
+        const {id}=req.params;
+        const cart = Products.findOne({id:id})
+    } catch (error) {
+        
+    }
 })
 
 module.exports = router;
