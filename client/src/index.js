@@ -5,12 +5,16 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux';
 import store from './store';
+import ContextProvider from './Components/context/ContextProvider';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  <ContextProvider>
     <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>
+  </ContextProvider>
 );

@@ -54,8 +54,8 @@ export default function Slide({ title, products }) {
                 {
                     products.map((e,i) => {
                         return (
-                            <NavLink to={`/getproductsone/${e.id}`}>
-                            <div key={i} className="products_items">
+                            <NavLink key={i} to={`/getproductsone/${e.id}`}>
+                            <div className="products_items">
                                 <div className="product_img">
                                     <img src={e.url} alt="product_image" />
                                     <p className='products_name'>{e.title.shortTitle}</p>

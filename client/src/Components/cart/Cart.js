@@ -2,13 +2,16 @@ import { Divider } from '@mui/material'
 // import axios from 'axios'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { fetchProduct } from '../../features/product/prodSlice'
+// import { LoginContext } from '../context/ContextProvider'
 import './cart.css'
 export default function Cart() {
 
     const { id } = useParams()
     // console.log(id);
+
+    const navigate=useNavigate("")
 
     const { product, loading, error } = useSelector((state) => state.productx);
     const dispatch = useDispatch();
@@ -40,12 +43,14 @@ export default function Cart() {
             credentials: "include"
         })
         console.log(checkRes)
-        const data1 = await checkRes.json();
+        // const data1 = await checkRes.json();
         // console.log((data1 + "front-end data"));
 
         if (checkRes.status !== 201) {
             alert("No data available!!")
+            navigate("/login")
         } else {
+            navigate("/buynow")
             alert("Successfully added to the cart!!")
         }
     }

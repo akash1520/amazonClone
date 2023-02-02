@@ -1,7 +1,9 @@
 import React from 'react';
 import './Newnav.css'
 
+
 export default function Newnav() {
+
   return (
   
     <div className="new_nav">

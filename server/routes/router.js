@@ -34,24 +34,24 @@ router.post("/register", async (req, res) => {
         fname,
         email,
         mobile,
-        password, 
+        password,
         cpassword
     } = req.body
-    if(!fname || !email || !mobile ||!password || !cpassword){
-        res.status(400).json({error:"Fill all the data"})
+    if (!fname || !email || !mobile || !password || !cpassword) {
+        res.status(400).json({ error: "Fill all the data" })
         console.log("User didn't provide proper data")
     }
 
     try {
-        const preUser = await USER.findOne({email:email})
-        
-        if(preUser){
-            res.status(409).json({Error:"This user is already present"})
-        }else if(password!=cpassword){
-            res.status(422).json({Error:"Passwords don't match"})
-        }else{
-            const finalUser= new USER({
-                fname,email,mobile,password,cpassword
+        const preUser = await USER.findOne({ email: email })
+
+        if (preUser) {
+            res.status(409).json({ Error: "This user is already present" })
+        } else if (password != cpassword) {
+            res.status(422).json({ Error: "Passwords don't match" })
+        } else {
+            const finalUser = new USER({
+                fname, email, mobile, password, cpassword
             })
 
             //password hashing process
@@ -59,24 +59,24 @@ router.post("/register", async (req, res) => {
             const storedata = await finalUser.save()
             console.log(storedata)
             res.status(201).json(storedata)
-            
+
 
         }
 
     } catch (error) {
-        
+
     }
 })
 
-router.post("/login", async(req,res)=>{
-    const {email,password} = req.body
-    if(!email||!password){
-        res.status(400).json({error:"Wrong details, fill it properly"})
+router.post("/login", async (req, res) => {
+    const { email, password } = req.body
+    if (!email || !password) {
+        res.status(400).json({ error: "Wrong details, fill it properly" })
     }
 
     try {
-        const  userLogin = await USER.findOne({email:email})
-        if(userLogin){
+        const userLogin = await USER.findOne({ email: email })
+        if (userLogin) {
             const isMatch = await bcrypt.compare(password, userLogin.password)
             // console.log(isMatch)
 
@@ -86,21 +86,21 @@ router.post("/login", async(req,res)=>{
 
             //cookie generation
             res.cookie("amazonWeb", token, {
-                httpOnly:true,
-                expires:new Date(Date.now()+3600000)
+                httpOnly: true,
+                expires: new Date(Date.now() + 3600000)
             })
-            
-            if(!isMatch){
-                res.status(400).json({error:"Wrong password, please enter the correct password"})
-            }else{
-                res.status(200).json({message:"Password match"})
+
+            if (!isMatch) {
+                res.status(400).json({ error: "Wrong password, please enter the correct password" })
+            } else {
+                res.status(200).json({ message: "Password match" })
             }
 
-        }else{
-            res.status(400).json({error:"Invalid Details"})
+        } else {
+            res.status(400).json({ error: "Invalid Details" })
         }
     } catch (error) {
-        res.status(400).json({error:"Invalid details"})
+        res.status(400).json({ error: "Invalid details" })
     }
 
 })
@@ -129,5 +129,15 @@ router.post("/addcart/:id", authenticate, async (req, res) => {
         console.log(error);
     }
 });
+
+
+router.post("/auth", authenticate, async (req, res) => {
+    try {
+        const Usercontact = await USER.findOne({ _id: req.userID });
+        if (Usercontact) res.status(201).json(Usercontact)
+    }catch(error){
+        res.status(400).json({error:"User not found"})
+    }
+})
 
 module.exports = router;
