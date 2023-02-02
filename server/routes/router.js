@@ -140,4 +140,13 @@ router.post("/auth", authenticate, async (req, res) => {
     }
 })
 
+router.get("/cartdetails", authenticate, async (req, res) => {
+    try {
+        const buyUser = await USER.findOne({ _id: req.userID });
+        res.status(201).json(buyUser)
+    }catch(error){
+        res.status(400).json({error:"User not found"})
+    }
+})
+
 module.exports = router;

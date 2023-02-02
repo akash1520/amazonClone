@@ -59,7 +59,7 @@ export default function Navbar() {
 
                         <p>Cart</p>
                         {
-                            account ?<Avatar className='avtar'>{account.fname[0].toUpperCase()}</Avatar>:
+                            account ?<Avatar className='avtar2'>{account.fname[0].toUpperCase()}</Avatar>:
                             <Avatar className='avtar' />
                         }
                     </div>
