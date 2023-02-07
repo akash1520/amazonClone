@@ -80,20 +80,22 @@ router.post("/login", async (req, res) => {
             const isMatch = await bcrypt.compare(password, userLogin.password)
             // console.log(isMatch)
 
-            //token generation
-            const token = await userLogin.generateAuthtoken()
-            // console.log(token);
-
-            //cookie generation
-            res.cookie("amazonWeb", token, {
-                httpOnly: true,
-                expires: new Date(Date.now() + 3600000)
-            })
 
             if (!isMatch) {
                 res.status(400).json({ error: "Wrong password, please enter the correct password" })
-            } else {
-                res.status(200).json({ message: "Password match" })
+            }
+
+            else {
+                 //token generation
+                 const token = await userLogin.generateAuthtoken()
+                 // console.log(token);
+ 
+                 //cookie generation
+                 res.cookie("amazonWeb", token, {
+                     httpOnly: true,
+                     expires: new Date(Date.now() + 120000)
+                 })
+                res.status(200).json(userLogin)
             }
 
         } else {
@@ -131,12 +133,12 @@ router.post("/addcart/:id", authenticate, async (req, res) => {
 });
 
 
-router.post("/auth", authenticate, async (req, res) => {
+router.get("/validuser", authenticate, async (req, res) => {
     try {
         const Usercontact = await USER.findOne({ _id: req.userID });
         if (Usercontact) res.status(201).json(Usercontact)
-    }catch(error){
-        res.status(400).json({error:"User not found"})
+    } catch (error) {
+        res.status(400).json({ error: "User not found" })
     }
 })
 
@@ -144,8 +146,24 @@ router.get("/cartdetails", authenticate, async (req, res) => {
     try {
         const buyUser = await USER.findOne({ _id: req.userID });
         res.status(201).json(buyUser)
-    }catch(error){
-        res.status(400).json({error:"User not found"})
+    } catch (error) {
+        res.status(400).json({ error: "User not found" })
+    }
+})
+
+router.delete("/removeCart/:id",authenticate,async(req,res)=>{
+    try {
+        const {id}=req.params
+
+        req.rootUser.carts = req.rootUser.carts.filter((remVal)=>{
+            return remVal.id!=id;
+        })
+        req.rootUser.save()
+        res.status(200).json(req.rootUser)
+        console.log("Item is removed")
+    } catch (error) {
+        console.log("error"+error)
+        res.status(400).json(req.rootUser)
     }
 })
 

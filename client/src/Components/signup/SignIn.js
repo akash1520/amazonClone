@@ -1,9 +1,12 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
+import { LoginContext } from '../context/ContextProvider'
 import './signup.css'
 export default function SignIn() {
+
+    const {account,setAccount}=useContext(LoginContext);
 
     const initialState={
         email:"",
@@ -28,18 +31,22 @@ export default function SignIn() {
             axios
                 .post("/login", logData)
                 .then((response)=>{
+                    if(response.status===400 || !response.data){
+                        toast.error(`${response.statusText} : Try again with proper details `,{
+                            position:"top-center"
+                        });
+                    }else{
                         toast.success("Signed in successfully",{
                             position:"top-center"
                         })
+                        setAccount(response.data)
                         // alert("Signed up successfully")
                         setLogData(initialState)
+                    }  
                 })
                 .catch(error=>{
-                    toast.error(`${error.response.statusText} : Try again with proper details `,{
-                        position:"top-center"
-                    });
+                    console.log("login page error"+error.message)
                 })
-
     }
 
   return (
