@@ -35,6 +35,7 @@ export default function Buynow() {
 
             {
               cartData.map((e, k) => {
+                {/* console.log(e._id) */}
                 return (
                   <>
                     <div className="item_container">
@@ -46,7 +47,7 @@ export default function Buynow() {
                         <p className='unusuall'>Usually dispatched in 5 days</p>
                         <p>Eligble for free Shipping</p>
                         <img src="https://m.media-amazon.com/images/G/31/marketing/fba/fba-badge_18px-2x._CB485942108_.png" alt='' />
-                        <Option />
+                        <Option deleteData={e._id} get={getBuyData} />
                       </div>
                       <h3 className="item_price">{e.price.cost}₹</h3>
                     </div>

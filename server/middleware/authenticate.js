@@ -11,7 +11,7 @@ const authenticate = async(req,res,next)=>{
         const rootUser = await User.findOne({_id:verifyToken._id,"tokens.token":token});
        
 
-        if(!rootUser){ throw new Error("User Not Found") };
+        if(!rootUser){ res.status(401).send("Unauthorized:No token provided") };
 
         req.token = token; 
         req.rootUser = rootUser;   

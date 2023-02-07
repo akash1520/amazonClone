@@ -93,7 +93,7 @@ router.post("/login", async (req, res) => {
                  //cookie generation
                  res.cookie("amazonWeb", token, {
                      httpOnly: true,
-                     expires: new Date(Date.now() + 120000)
+                     expires: new Date(Date.now() + 240000)
                  })
                 res.status(200).json(userLogin)
             }
@@ -154,13 +154,13 @@ router.get("/cartdetails", authenticate, async (req, res) => {
 router.delete("/removeCart/:id",authenticate,async(req,res)=>{
     try {
         const {id}=req.params
-
         req.rootUser.carts = req.rootUser.carts.filter((remVal)=>{
-            return remVal.id!=id;
+            return remVal._id!=id;
         })
-        req.rootUser.save()
-        res.status(200).json(req.rootUser)
+        req.rootUser.save(()=>{
         console.log("Item is removed")
+        })
+        res.status(200).json(req.rootUser)
     } catch (error) {
         console.log("error"+error)
         res.status(400).json(req.rootUser)
