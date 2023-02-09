@@ -1,15 +1,21 @@
 import axios from 'axios'
 import React from 'react'
+import { toast, ToastContainer } from 'react-toastify'
+
 
 export default function Option({deleteData,get}) {
 
   async function removeData(){
     const res = await axios.delete(`/removeCart/${deleteData}`)
-    if(res.status===400 || !(res.data)){
-      console.log("error")
-    }else{
+    if(res.status===200){
       console.log("cartItem deleted")
-      get()
+      toast.success("Item deleted successfully!!")
+      const timer = setTimeout(() => {
+        get()
+      }, 3000);
+      return () => clearTimeout(timer);
+    }else{
+      
     }
   }
 
@@ -21,11 +27,10 @@ export default function Option({deleteData,get}) {
         <option value={3}>3</option>
         <option value={4}>4</option>
     </select>
-    <p style={{cursor:"pointer"}} onClick={()=>{
-      removeData()
-    }}>Delete</p><span>|</span>
+    <p style={{cursor:"pointer"}} onClick={()=>{removeData()}}>Delete</p><span>|</span>
     <p className='forremovemedia' style={{cursor:"pointer"}}>Save for Later</p><span>|</span>
     <p className='forremovemedia' style={{cursor:"pointer"}}>See more like this</p>
+    <ToastContainer/>
     </div>
   )
 }

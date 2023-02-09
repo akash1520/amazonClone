@@ -45,7 +45,9 @@ export default function SignIn() {
                     }  
                 })
                 .catch(error=>{
-                    console.log("login page error"+error.message)
+                    toast.error(`${error.message} : Try again with proper details `,{
+                        position:"top-center"
+                    });
                 })
     }
 
