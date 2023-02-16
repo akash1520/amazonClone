@@ -13,6 +13,8 @@ import { LoginContext } from '../context/ContextProvider';
 import { Drawer, IconButton, MenuItem, Menu } from '@mui/material'
 import Rightheader from './Rightheader'
 import { useSelector } from 'react-redux'
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 
 
 
@@ -22,7 +24,7 @@ export default function Navbar() {
 
     const { account, setAccount } = useContext(LoginContext)
     const [dropen, setDropen] = useState(false)
-    const navigate=useNavigate();
+    const navigate = useNavigate();
 
     // const [account,setAccount]=useState();
 
@@ -47,9 +49,9 @@ export default function Navbar() {
         if (checkRes2.status !== 201) {
             alert("No data available!!")
         } else {
-           navigate("/")
-            toast.success("Logged out successfully",{
-                position:"top-center"
+            navigate("/")
+            toast.success("Logged out successfully", {
+                position: "top-center"
             })
             setAccount(false)
         }
@@ -70,11 +72,16 @@ export default function Navbar() {
         setAnchorEl(null);
     };
 
-    const [text,setText]=useState("")
-    const [listOpen,setListOpen]=useState(true)
+    const [text, setText] = useState("")
+    const [listOpen, setListOpen] = useState(true)
 
-    const product = useSelector((state) => state.product)
+    const products = useSelector((state) => state.product.products)
+    console.log(products)
 
+    function getText(items) {
+        setText(items)
+        setListOpen(false)
+    }
 
     return (
         <header>
@@ -86,7 +93,7 @@ export default function Navbar() {
                     </IconButton>
 
                     <Drawer open={dropen} onClose={handleeClose}>
-                        <Rightheader logclose={handleeClose} />
+                        <Rightheader logclose={handleeClose} logoutuser={logOutUser} />
                     </Drawer>
 
                     <div className="navlogo">
@@ -94,12 +101,29 @@ export default function Navbar() {
                     </div>
                     <div className="nav_searchbar">
                         <input type="text" name=""
-                        placeholder='Please enter the name of the product'
-                        onChange={(e)=>getText(e.target.value)}
-                         id="" />
+                            placeholder='Please enter the name of the product'
+                            onChange={(e) => getText(e.target.value)}
+                            id="" />
                         <div className="search_icon">
                             <SearchIcon id="search" />
                         </div>
+
+
+                        {/* search filter */}
+
+                        {
+                            text &&
+                            <List className='extrasearch' hidden={listOpen}>
+                                {
+                                    products.filter(product => product.title.longTitle.toLowerCase().includes(text.toLowerCase())).map(product => (
+                                        <ListItem><NavLink to={`getproductsone/${product.id}`} onClick={()=>setListOpen(true)}>{
+                                            product.title.longTitle
+                                        }</NavLink></ListItem>
+                                    ))
+                                }
+                            </List>
+                        }
+
                     </div>
                 </div>
                 <div className="right">
@@ -119,40 +143,40 @@ export default function Navbar() {
                             </NavLink>
                         }
 
-                        <ToastContainer/>
+                        <ToastContainer />
 
                         <p>Cart</p>
                     </div>
                     {
-                            account ? <Avatar className='avtar2'
+                        account ? <Avatar className='avtar2'
+                            id="basic-button"
+                            aria-controls={open ? 'basic-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open ? 'true' : undefined}
+                            onClick={handleClick}>{account.fname[0].toUpperCase()}</Avatar> :
+                            <Avatar className='avtar'
                                 id="basic-button"
                                 aria-controls={open ? 'basic-menu' : undefined}
                                 aria-haspopup="true"
                                 aria-expanded={open ? 'true' : undefined}
-                                onClick={handleClick}>{account.fname[0].toUpperCase()}</Avatar> :
-                                <Avatar className='avtar'
-                                    id="basic-button"
-                                    aria-controls={open ? 'basic-menu' : undefined}
-                                    aria-haspopup="true"
-                                    aria-expanded={open ? 'true' : undefined}
-                                    onClick={handleClick} />
-                        }
-                        <Menu
-                            id="basic-menu"
-                            anchorEl={anchorEl}
-                            open={open}
-                            onClose={handleClose}
-                            MenuListProps={{
-                                'aria-labelledby': 'basic-button',
-                            }}
-                        >
-                            {
-                                account?<><MenuItem onClick={handleClose}>Profile</MenuItem>
+                                onClick={handleClick} />
+                    }
+                    <Menu
+                        id="basic-menu"
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        MenuListProps={{
+                            'aria-labelledby': 'basic-button',
+                        }}
+                    >
+                        {
+                            account ? <><MenuItem onClick={handleClose}>Profile</MenuItem>
                                 <MenuItem onClick={handleClose}>My account</MenuItem>
-                                <MenuItem onClick={()=>{handleClose();logOutUser()}}><LogoutIcon style={{fontSize:16,marginRight:3}}/>Logout</MenuItem></>:"Login!!"
-                            }
-                            
-                        </Menu>
+                                <MenuItem onClick={() => { handleClose(); logOutUser() }}><LogoutIcon style={{ fontSize: 16, marginRight: 3 }} />Logout</MenuItem></> : "Login!!"
+                        }
+
+                    </Menu>
                 </div>
             </nav>
         </header>
