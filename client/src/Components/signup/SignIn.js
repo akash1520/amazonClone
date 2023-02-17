@@ -29,13 +29,7 @@ export default function SignIn() {
         e.preventDefault();
         const res = await
             axios
-                .create({
-                    url:"/login",
-                    method:"post",
-                    baseURL: 'https://amazon-clone-sepia-rho.vercel.app',
-                    withCredentials:true,
-                    data:logData
-                })
+                .post("https://amazon-clone-sepia-rho.vercel.app/login", logData,,{withCredentials:true})
                 .then((response)=>{
                     if(response.status===400 || !response.data){
                         toast.error(`${response.statusText} : Try again with proper details `,{

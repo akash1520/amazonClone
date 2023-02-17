@@ -28,13 +28,7 @@ export default function SignUp() {
         e.preventDefault();
         const res = await
             axios
-                . .create({
-                    url:"/register",
-                    method:"post",
-                    baseURL: 'https://amazon-clone-sepia-rho.vercel.app',
-                    withCredentials:true,
-                    data:userData
-                })
+                .post("https://amazon-clone-sepia-rho.vercel.app/register", userData,{withCredentials:true})
                 .then((response)=>{
                         toast.success("Signed up successfully",{
                             position:"top-center"
