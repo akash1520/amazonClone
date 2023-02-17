@@ -7,13 +7,8 @@ const DefaultData= require("./DefaultData")
 const router = require("./routes/router.js")
 const cookieParser = require("cookie-parser")
 
-const corsOptions = {
-    origin: true, //included origin as true
-    credentials: true, //included credentials as true
-};
-
 app.use(express.json())
-app.use(cors(corsOptions))
+app.use(cors({ origin: true, credentials: true }))
 app.use(cookieParser(""))
 app.use(express.static('public'))
 app.use(router)
