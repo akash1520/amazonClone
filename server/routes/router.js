@@ -94,7 +94,7 @@ router.post("/login", async (req, res) => {
                  //cookie generation
                 document.cookie('amazonWeb',token)
                 // res.cookie('amazonWeb',token, { path:'/',expires: new Date(new Date.now() + 3600000) });
-                res.status(200).json(userLogin)
+                res.status(200).json(userLogin).send("cookie has been sent!!")
             }
 
         } else {
