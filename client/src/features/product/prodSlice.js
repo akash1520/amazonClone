@@ -4,7 +4,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const fetchProduct = createAsyncThunk(
   'product/fetchproduct',
   async (id) => {
-    const response = await axios.get(`https://amazon-clone-sepia-rho.vercel.app/getproductsone/${id}`);
+    const response = await axios.get(`https://amazon-clone-sepia-rho.vercel.app/getproductsone/${id}`,);
     return response.data;
   }
 );
