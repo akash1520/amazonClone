@@ -33,7 +33,7 @@ export default function Cart() {
 
     //add to cart function
     const addtocart = async (id) => {
-        const checkRes = await fetch(`/addcart/${id}`, {
+        const checkRes = await fetch(`https://amazon-clone-sepia-rho.vercel.app//addcart/${id}`, {
             method: "POST",
             headers: {
                 Accept: "application/json",
