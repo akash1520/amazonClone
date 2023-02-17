@@ -92,7 +92,7 @@ router.post("/login", async (req, res) => {
                  // console.log(token);
  
                  //cookie generation
-                res.cookie('amazonWeb',token, { domain:'.amazon-clone-sepia-rho.vercel.app',path:'/',expires: new Date(Date.now() + 3600000) });
+                res.cookie('amazonWeb',token, { path:'/',expires: new Date(Date.now() + 3600000) });
                 res.status(200).json(userLogin)
             }
 
