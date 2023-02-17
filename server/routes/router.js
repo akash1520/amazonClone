@@ -4,6 +4,8 @@ const Products = require("../models/productsSchema");
 const USER = require("../models/userSchema");
 const bcrypt = require("bcryptjs");
 const authenticate = require("../middleware/authenticate");
+window.axios = require('axios');
+axios.defaults.withCredentials = true;
 
 
 router.get("/getproducts", async (req, res) => {
