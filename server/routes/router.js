@@ -93,7 +93,7 @@ router.post("/login", async (req, res) => {
                  //cookie generation
                  res.cookie("amazonWeb", token, {
                      httpOnly: true,
-                     expires: new Date(Date.now() + 240000)
+                     expires: new Date(Date.now() + 360000)
                  })
                 res.status(200).json(userLogin)
             }
