@@ -29,7 +29,7 @@ export default function SignIn() {
         e.preventDefault();
         const res = await
             axios
-                .post("https://amazon-clone-sepia-rho.vercel.app/login", logData,{withCredentials:true})
+                .post("https://amazon-clone-sepia-rho.vercel.app/login", logData)
                 .then((response)=>{
                     if(response.status===400 || !response.data){
                         throw Error(`${response.statusText} : Try again with proper details `);

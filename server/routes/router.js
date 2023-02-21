@@ -93,8 +93,8 @@ router.post("/login", async (req, res) => {
                  //cookie generation
                 res.cookie("amazonWeb",token,{
                     httpOnly: true,
-                    SameSite: app.get("env") === "development" ? true : "none",
-                    secure: app.get("env") === "development" ? false : true,
+                    SameSite: "none",
+                    secure: true
                   });
                 res.status(200).json(userLogin)
             }
