@@ -29,12 +29,10 @@ export default function SignIn() {
         e.preventDefault();
         const res = await
             axios
-                .get("https://amazon-clone-sepia-rho.vercel.app/login", logData)
+                .post("https://amazon-clone-sepia-rho.vercel.app/login", logData)
                 .then((response)=>{
                     if(response.status===400 || !response.data){
-                        toast.error(`${response.statusText} : Try again with proper details `,{
-                            position:"top-center"
-                        });
+                        throw error(`${response.statusText} : Try again with proper details `);
                     }else{
                         toast.success("Signed in successfully",{
                             position:"top-center"
@@ -60,7 +58,7 @@ export default function SignIn() {
                 </div>
                 <ToastContainer/>
                 <div className="sign_form">
-                    <form method='GET'>
+                    <form method='POST'>
                         <h1>Sign In</h1>
                         <div className="form_data">
                             <label htmlFor='email'>
