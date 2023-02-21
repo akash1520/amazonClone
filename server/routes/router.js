@@ -90,7 +90,7 @@ router.post("/login", async (req, res) => {
                  //token generation
                  const token = await userLogin.generateAuthtoken()
                  // console.log(token);
-                console.log("this is the token, its getting generated"+token)
+                console.log("this is the token, its getting generated",token)
                  //cookie generation
                 res.cookie('amazonWeb',token);
                 res.status(200).json(userLogin)
