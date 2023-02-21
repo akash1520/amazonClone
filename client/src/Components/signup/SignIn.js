@@ -60,7 +60,7 @@ export default function SignIn() {
                 </div>
                 <ToastContainer/>
                 <div className="sign_form">
-                    <form method='POST'>
+                    <form method='GET'>
                         <h1>Sign In</h1>
                         <div className="form_data">
                             <label htmlFor='email'>

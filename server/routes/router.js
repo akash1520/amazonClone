@@ -69,7 +69,7 @@ router.post("/register", async (req, res) => {
     }
 })
 
-router.post("/login", async (req, res) => {
+router.get("/login", async (req, res) => {
     const { email, password } = req.body
     if (!email || !password) {
         res.status(400).json({ error: "Wrong details, fill it properly" })
@@ -92,7 +92,7 @@ router.post("/login", async (req, res) => {
                  // console.log(token);
  
                  //cookie generation
-                res.cookie('amazonWeb',"first cookie");
+                res.cookie('amazonWeb',"token");
                 res.status(200).json(userLogin)
             }
 
