@@ -27,7 +27,6 @@ router.get("/getproductsone/:id", async (req, res) => {
     } catch (error) {
         console.log("error", error.message)
     }
-
 })
 
 //register data
@@ -92,7 +91,11 @@ router.post("/login", async (req, res) => {
                  const token = await userLogin.generateAuthtoken()
                 // console.log("this is the token, its getting generated",token)
                  //cookie generation
-                res.cookie("amazonWeb",token);
+                res.cookie("amazonWeb",token,{
+                    httpOnly: true,
+                    SameSite: app.get("env") === "development" ? true : "none",
+                    secure: app.get("env") === "development" ? false : true,
+                  });
                 res.status(200).json(userLogin)
             }
 

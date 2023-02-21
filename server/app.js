@@ -8,7 +8,10 @@ const router = require("./routes/router.js")
 const cookieParser = require("cookie-parser")
 
 app.use(express.json())
-app.use(cors({ origin: true, credentials: true }))
+app.use(cors({
+    origin: config.get("https://amazonweb-tawny.vercel.app"),
+    credentials: true,
+  }))
 app.use(cookieParser(""))
 app.use(express.static('public'))
 app.use(router)
