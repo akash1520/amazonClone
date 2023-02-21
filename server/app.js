@@ -10,11 +10,10 @@ const corsOptions = {
   origin: 'https://amazonweb-tawny.vercel.app',
   credentials: true,
 };
-
+app.use(cors(corsOptions))
 app.use(express.json())
 app.use(cookieParser(""))
 app.use(express.static('public'))
-app.use(cors(corsOptions))
 app.use(router)
 
 
