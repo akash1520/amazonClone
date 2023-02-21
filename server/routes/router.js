@@ -28,7 +28,6 @@ router.get("/getproductsone/:id", async (req, res) => {
         console.log("error", error.message)
     }
 
-    res.cookie("fuck me","idkman")
 })
 
 //register data
