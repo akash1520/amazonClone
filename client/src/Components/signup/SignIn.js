@@ -32,7 +32,7 @@ export default function SignIn() {
                 .post("https://amazon-clone-sepia-rho.vercel.app/login", logData)
                 .then((response)=>{
                     if(response.status===400 || !response.data){
-                        throw error(`${response.statusText} : Try again with proper details `);
+                        throw Error(`${response.statusText} : Try again with proper details `);
                     }else{
                         toast.success("Signed in successfully",{
                             position:"top-center"
