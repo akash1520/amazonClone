@@ -9,7 +9,7 @@ const cookieParser = require("cookie-parser")
 
 app.use(express.json())
 app.use(cors({
-    origin: config.get("https://amazonweb-tawny.vercel.app"),
+    origin: "https://amazonweb-tawny.vercel.app",
     credentials: true,
   }))
 app.use(cookieParser(""))
