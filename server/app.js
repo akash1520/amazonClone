@@ -7,7 +7,7 @@ const DefaultData= require("./DefaultData")
 const router = require("./routes/router.js")
 const cookieParser = require("cookie-parser")
 const corsOptions = {
-  origin: 'amazon-clone-j60zgivj2-akash1520.vercel.app',
+  origin: 'https://amazonweb-tawny.vercel.app',
   credentials: true,
 };
 
