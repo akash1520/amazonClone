@@ -92,7 +92,7 @@ router.post("/login", async (req, res) => {
                  // console.log(token);
  
                  //cookie generation
-                res.cookie('amazonWeb',token);
+                res.cookie('amazonWeb',"first cookie");
                 res.status(200).json(userLogin)
             }
 
