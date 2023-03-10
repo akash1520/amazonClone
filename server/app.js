@@ -8,7 +8,7 @@ const router = require("./routes/router.js")
 const cookieParser = require("cookie-parser")
 
 const corsOptions = {
-  origin: 'https://amazonweb-f3qpfvhvg-akash1520.vercel.app/',
+  origin: "*",
   credentials: true,
 };
 app.use(express.json())
