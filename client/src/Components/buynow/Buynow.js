@@ -12,7 +12,7 @@ export default function Buynow() {
   console.log(cartData)
 
   const getBuyData = async () => {
-    const res = (await axios.get(`${window.env.api}/cartdetails`)).data
+    const res = (await axios.get(`${process.env.REACT_APP_API}/cartdetails`)).data
     console.log(res)
     setCartData(res.carts)
   }

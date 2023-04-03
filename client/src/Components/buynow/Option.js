@@ -6,7 +6,7 @@ import { toast, ToastContainer } from 'react-toastify'
 export default function Option({deleteData,get}) {
 
   async function removeData(){
-    const res = await axios.delete(`${window.env.api}/removeCart/${deleteData}`,{withCredentials:true})
+    const res = await axios.delete(`${process.env.REACT_APP_API}/removeCart/${deleteData}`,{withCredentials:true})
     if(res.status===200){
       console.log("cartItem deleted")
       toast.success("Item deleted successfully!!")

@@ -31,7 +31,7 @@ export default function Navbar() {
 
     async function navData() {
 
-        const checkRes = await axios.get(`${window.env.api}/validuser`)
+        const checkRes = await axios.get(`${process.env.REACT_APP_API}/validuser`)
         // console.log(checkRes.data.carts)
 
         if (checkRes.status !== 201) {
@@ -43,7 +43,7 @@ export default function Navbar() {
 
     async function logOutUser() {
 
-        const checkRes2 = await axios.get("https://amazon-clone-323urraxc-akash1520.vercel.app/logout")
+        const checkRes2 = await axios.get(`${process.env.REACT_APP_API}/logout`)
         // console.log(checkRes.data.carts)
 
         if (checkRes2.status !== 201) {

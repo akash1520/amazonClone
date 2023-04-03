@@ -34,7 +34,7 @@ export default function Cart() {
 
     //add to cart function
     const addtocart = async (id) => {
-        const checkRes = await axios.post(`${window.env.api}/addcart/${id}`,prod,{
+        const checkRes = await axios.post(`${process.env.REACT_APP_API}/addcart/${id}`,prod,{
             withCredentials: true,
             headers: {
               'Access-Control-Allow-Origin': '*'

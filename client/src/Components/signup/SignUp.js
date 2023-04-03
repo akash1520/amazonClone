@@ -28,7 +28,7 @@ export default function SignUp() {
         e.preventDefault();
         const res = await
             axios
-                .post(`${window.env.api}/register`, userData,{withCredentials:true})
+                .post(`${process.env.REACT_APP_API}/register`, userData,{withCredentials:true})
                 .then((response)=>{
                         toast.success("Signed up successfully",{
                             position:"top-center"
