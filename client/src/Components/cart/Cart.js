@@ -56,7 +56,6 @@ export default function Cart() {
             alert("No data available!!")
             navigate("/login")
         } else {
-            navigate("/buynow")
             alert("Successfully added to the cart!!")
         }
     }
@@ -71,7 +70,10 @@ export default function Cart() {
                             if(token)addtocart(prod.id)
                             else navigate("/login")
                         }}>Add to Cart</button>
-                        <button className='cart_btn2'>Buy Now</button>
+                        <button className='cart_btn2' onClick={() => {
+                            if(token){addtocart(prod.id);navigate("/buynow")}
+                            else navigate("/login")
+                        }}>Buy Now</button>
                     </div>
                 </div>
                 <div className="right_cart">
