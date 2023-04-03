@@ -67,7 +67,10 @@ export default function Cart() {
                 <div className="left_cart">
                     <img src={prod.detailUrl} alt='cart_image' />
                     <div className="cart_btn">
-                        <button className='cart_btn1' onClick={() => addtocart(prod.id)}>Add to Cart</button>
+                        <button className='cart_btn1' onClick={() => {
+                            if(token)addtocart(prod.id)
+                            else navigate("/login")
+                        }}>Add to Cart</button>
                         <button className='cart_btn2'>Buy Now</button>
                     </div>
                 </div>
