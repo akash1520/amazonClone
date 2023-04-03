@@ -10,7 +10,7 @@ const initialState = {
 // Generates pending, fulfilled and rejected action types
 export const fetchProducts = createAsyncThunk('product/fetchProducts', () => {
   return axios
-    .get('https://amazon-clone-hs9d4w1kd-akash1520.vercel.app/getproducts')
+    .get(`${window.env.api}/getproducts`)
     .then(response => response.data)
 })
 

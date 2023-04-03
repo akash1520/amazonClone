@@ -31,7 +31,7 @@ export default function Navbar() {
 
     async function navData() {
 
-        const checkRes = await axios.get("https://amazon-clone-323urraxc-akash1520.vercel.app/validuser")
+        const checkRes = await axios.get(`${window.env.api}/validuser`)
         // console.log(checkRes.data.carts)
 
         if (checkRes.status !== 201) {

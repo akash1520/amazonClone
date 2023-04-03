@@ -12,7 +12,7 @@ export default function Buynow() {
   console.log(cartData)
 
   const getBuyData = async () => {
-    const res = (await axios.get("https://amazon-clone-323urraxc-akash1520.vercel.app/cartdetails")).data
+    const res = (await axios.get(`${window.env.api}/cartdetails`)).data
     console.log(res)
     setCartData(res.carts)
   }

@@ -4,7 +4,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const fetchProduct = createAsyncThunk(
   'product/fetchproduct',
   async (id) => {
-    const response = await axios.get(`https://amazon-clone-323urraxc-akash1520.vercel.app/getproductsone/${id}`);
+    const response = await axios.get(`${window.env.api}/getproductsone/${id}`);
     return response.data;
   }
 );

@@ -33,7 +33,7 @@ export default function Cart() {
 
     //add to cart function
     const addtocart = async (id) => {
-        const checkRes = await fetch(`https://amazon-clone-323urraxc-akash1520.vercel.app/addcart/${id}`, {
+        const checkRes = await fetch(`${window.env.api}/addcart/${id}`, {
             method: "POST",
             credentials:'include',
             headers: {

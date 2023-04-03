@@ -28,7 +28,7 @@ export default function SignUp() {
         e.preventDefault();
         const res = await
             axios
-                .post("https://amazon-clone-323urraxc-akash1520.vercel.app/register", userData,{withCredentials:true})
+                .post(`${window.env.api}/register`, userData,{withCredentials:true})
                 .then((response)=>{
                         toast.success("Signed up successfully",{
                             position:"top-center"
