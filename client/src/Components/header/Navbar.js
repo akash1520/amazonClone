@@ -9,12 +9,12 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LoginContext } from '../context/ContextProvider';
 import { Drawer, IconButton, MenuItem, Menu } from '@mui/material'
 import Rightheader from './Rightheader'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import { updateUser } from '../../features/authSlice'
 
 
 
@@ -22,28 +22,29 @@ export default function Navbar() {
 
 
 
-    const { account, setAccount } = useContext(LoginContext)
+    const account = useSelector((state)=>state.auth.user)
+    const token = useSelector((state)=>state.auth.token)
     const [dropen, setDropen] = useState(false)
     const navigate = useNavigate();
-
+    const dispatch = useDispatch()
     // const [account,setAccount]=useState();
 
 
     async function navData() {
 
-        const checkRes = await axios.get(`${process.env.REACT_APP_API}/validuser`)
-        // console.log(checkRes.data.carts)
-
-        if (checkRes.status !== 201) {
-            alert("No data available!!")
-        } else {
-            setAccount(checkRes.data)
-        }
     }
 
     async function logOutUser() {
-
-        const checkRes2 = await axios.get(`${process.env.REACT_APP_API}/logout`)
+        const headers ={
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token.token}`
+        }
+        console.log(headers)
+        console.log(token)
+        const checkRes2 = await axios.post(`${process.env.REACT_APP_API}/logout`,{},{
+            withCredentials: true,
+            headers
+        })
         // console.log(checkRes.data.carts)
 
         if (checkRes2.status !== 201) {
@@ -53,7 +54,8 @@ export default function Navbar() {
             toast.success("Logged out successfully", {
                 position: "top-center"
             })
-            setAccount(false)
+            dispatch(updateUser({user:null}))
+            handleClose();
         }
     }
 
@@ -173,7 +175,7 @@ export default function Navbar() {
                         {
                             account ? <><MenuItem onClick={handleClose}>Profile</MenuItem>
                                 <MenuItem onClick={handleClose}>My account</MenuItem>
-                                <MenuItem onClick={() => { handleClose(); logOutUser() }}><LogoutIcon style={{ fontSize: 16, marginRight: 3 }} />Logout</MenuItem></> : "Login!!"
+                                <MenuItem onClick={() => { logOutUser() }}><LogoutIcon style={{ fontSize: 16, marginRight: 3 }} />Logout</MenuItem></> : "Login!!"
                         }
 
                     </Menu>

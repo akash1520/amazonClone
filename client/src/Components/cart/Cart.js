@@ -1,12 +1,14 @@
 import { Divider } from '@mui/material'
 // import axios from 'axios'
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch,useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { fetchProduct } from '../../features/product/prodSlice'
 // import { LoginContext } from '../context/ContextProvider'
 import './cart.css'
 import axios from 'axios'
+import { updateUser } from '../../features/authSlice'
+
 export default function Cart() {
 
     const { id } = useParams()
@@ -15,6 +17,7 @@ export default function Cart() {
     const navigate=useNavigate("")
 
     const { product, loading, error } = useSelector((state) => state.productx);
+    const token = useSelector((state)=>state.auth.token.token)
     const dispatch = useDispatch();
     const [prod] = product
     console.log(prod);
@@ -37,11 +40,14 @@ export default function Cart() {
         const checkRes = await axios.post(`${process.env.REACT_APP_API}/addcart/${id}`,prod,{
             withCredentials: true,
             headers: {
-              'Access-Control-Allow-Origin': '*'
+            'Content-Type': 'application/json',
+              "Authorization":`Bearer ${token}`
             }
           })
          
+        
         console.log(checkRes)
+        dispatch(updateUser({user:checkRes.data}))
         // const data1 = await checkRes.json();
         // console.log((data1 + "front-end data"));
 

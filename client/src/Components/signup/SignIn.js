@@ -4,9 +4,13 @@ import { NavLink } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
 import { LoginContext } from '../context/ContextProvider'
 import './signup.css'
+import { setLogin } from '../../features/authSlice'
+import { useDispatch } from 'react-redux'
+
 export default function SignIn() {
 
     const {account,setAccount}=useContext(LoginContext);
+    const dispatch = useDispatch()
 
     const initialState={
         email:"",
@@ -38,6 +42,12 @@ export default function SignIn() {
                             position:"top-center"
                         })
                         setAccount(response.data)
+                        console.log(response.data)
+                        dispatch(setLogin({
+                            user:response.data,
+                            token:response.data.tokens[response.data.tokens.length-1]
+                        }))
+                        // console.log(response.data.tokens[response.data.tokens.length-1])
                         // alert("Signed up successfully")
                         setLogData(initialState)
                     }  

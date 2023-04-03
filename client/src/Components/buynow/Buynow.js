@@ -5,19 +5,13 @@ import './buynow.css'
 import Option from './Option'
 import Right from './Right'
 import Subtotal from './Subtotal'
+import { useSelector } from 'react-redux'
+
 
 export default function Buynow() {
 
-  const [cartData, setCartData] = useState("")
-  console.log(cartData)
+  const cartData = (useSelector((state)=>state.auth)).user.carts
 
-  const getBuyData = async () => {
-    const res = (await axios.get(`${process.env.REACT_APP_API}/cartdetails`)).data
-    console.log(res)
-    setCartData(res.carts)
-  }
-
-  useEffect(() => { getBuyData() }, [])
 
 
 
@@ -47,7 +41,10 @@ export default function Buynow() {
                         <p className='unusuall'>Usually dispatched in 5 days</p>
                         <p>Eligble for free Shipping</p>
                         <img src="https://m.media-amazon.com/images/G/31/marketing/fba/fba-badge_18px-2x._CB485942108_.png" alt='' />
-                        <Option deleteData={e._id} get={getBuyData} />
+
+                        {/* gotta fix this */}
+                        <Option deleteData={e._id} /> 
+
                       </div>
                       <h3 className="item_price">{e.price.cost}₹</h3>
                     </div>

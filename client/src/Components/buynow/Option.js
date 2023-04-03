@@ -1,21 +1,33 @@
 import axios from 'axios'
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { toast, ToastContainer } from 'react-toastify'
+import { updateUser } from '../../features/authSlice'
+import { Navigate } from 'react-router-dom'
 
 
-export default function Option({deleteData,get}) {
+
+export default function Option({deleteData}) {
+  const dispatch = useDispatch()
+  const token = useSelector((state)=>state.auth.token.token)
 
   async function removeData(){
-    const res = await axios.delete(`${process.env.REACT_APP_API}/removeCart/${deleteData}`,{withCredentials:true})
+    const res = await axios.delete(`${process.env.REACT_APP_API}/removeCart/${deleteData}`,
+    {
+      withCredentials:true,
+      headers:{
+        "Authorization":`Bearer ${token}`
+      }
+    },{
+
+    })
     if(res.status===200){
       console.log("cartItem deleted")
+      dispatch(updateUser({user:res.data}))
       toast.success("Item deleted successfully!!")
-      const timer = setTimeout(() => {
-        get()
-      }, 3000);
-      return () => clearTimeout(timer);
+      Navigate("/buynow")
     }else{
-      
+      res.status(400).json({error:"error"})
     }
   }
 
