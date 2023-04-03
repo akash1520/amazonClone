@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { fetchProduct } from '../../features/product/prodSlice'
 // import { LoginContext } from '../context/ContextProvider'
 import './cart.css'
+import axios from 'axios'
 export default function Cart() {
 
     const { id } = useParams()
@@ -33,15 +34,8 @@ export default function Cart() {
 
     //add to cart function
     const addtocart = async (id) => {
-        const checkRes = await fetch(`${window.env.api}/addcart/${id}`, {
-            method: "POST",
-            credentials:'include',
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            },
-            body:JSON.stringify(prod),
-        })
+        const checkRes = await axios.post(`${window.env.api}/addcart/${id}`,prod,{withCredentials:true})
+         
         console.log(checkRes)
         // const data1 = await checkRes.json();
         // console.log((data1 + "front-end data"));
