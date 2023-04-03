@@ -17,7 +17,8 @@ export default function Cart() {
     const navigate=useNavigate("")
 
     const { product, loading, error } = useSelector((state) => state.productx);
-    const token = useSelector((state)=>state.auth.token.token)
+    const preToken = useSelector((state)=>state.auth.token)
+    const token = preToken===null?null:preToken.token
     const dispatch = useDispatch();
     const [prod] = product
     console.log(prod);
