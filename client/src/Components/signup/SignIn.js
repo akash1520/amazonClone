@@ -29,7 +29,7 @@ export default function SignIn() {
         e.preventDefault();
         const res = await
             axios
-                .post(`${process.env.api}/login`, logData,{withCredentials:true})
+                .post(`${process.env.REACT_APP_API}/login`, logData,{withCredentials:true})
                 .then((response)=>{
                     if(response.status===400 || !response.data){
                         throw Error(`${response.statusText} : Try again with proper details `);
