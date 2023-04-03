@@ -10,8 +10,7 @@ import SignIn from './Components/signup/SignIn';
 import SignUp from './Components/signup/SignUp';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useEffect, useState } from 'react';
-import dotenv from 'dotenv'
-dotenv.config()
+
 
 
 
